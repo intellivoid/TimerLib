@@ -1,0 +1,47 @@
+{
+    "package": {
+        "package_name": "net.intellivoid.timerlib",
+        "name": "TimerLib",
+        "version": "1.0.0.0",
+        "author": "Zi Xing Narrakas",
+        "organization": "Intellivoid",
+        "description": "Calculates the time between start and the end",
+        "url": "https://github.com/intellivoid/TimerLib",
+        "dependencies": [],
+        "configuration": {
+            "autoload_method": "generated_spl",
+            "main": null,
+            "post_installation": [],
+            "pre_installation": []
+        }
+    },
+    "components": [
+        {
+            "required": true,
+            "file": "Timer.php"
+        },
+        {
+            "required": true,
+            "file": "Exceptions/CannotStartTimerException.php"
+        },
+        {
+            "required": true,
+            "file": "Exceptions/NoActiveTimerException.php"
+        },
+        {
+            "required": true,
+            "file": "Exceptions/DurationNotAvailableException.php"
+        },
+        {
+            "required": true,
+            "file": "Interfaces/Exception.php"
+        },
+        {
+            "required": true,
+            "file": "Objects/Duration.php"
+        }
+    ],
+    "files": [
+        "package.json"
+    ]
+}
