@@ -2,7 +2,7 @@
     "package": {
         "package_name": "net.intellivoid.timerlib",
         "name": "TimerLib",
-        "version": "1.0.0.1",
+        "version": "1.0.0.2",
         "author": "Zi Xing Narrakas",
         "organization": "Intellivoid",
         "description": "Calculates the time between start and the end",

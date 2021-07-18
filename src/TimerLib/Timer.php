@@ -84,6 +84,19 @@
         }
 
         /**
+         * Stops and disregards the timer
+         */
+        public function cancel()
+        {
+            if($this->is_running == false)
+                throw new NoActiveTimerException("You cannot stop a timer that isn't running");
+
+            $this->is_running = false;
+            $this->duration = null;
+            $this->startTime = 0;
+        }
+
+        /**
          * Returns the duration of the timer (can only be called once the timer has been stopped after it was running)
          *
          * @return Duration
