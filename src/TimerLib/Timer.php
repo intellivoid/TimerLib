@@ -5,11 +5,11 @@
 
     namespace TimerLib;
 
+    use InvalidArgumentException;
     use TimerLib\Exceptions\CannotStartTimerException;
     use TimerLib\Exceptions\NoActiveTimerException;
     use TimerLib\Exceptions\DurationNotAvailableException;
     use TimerLib\Objects\Duration;
-    use function array_pop;
     use function hrtime;
 
     /**
@@ -40,6 +40,11 @@
         private $is_running = false;
 
         /**
+         * @var int
+         */
+        private $max_time_logs = 0;
+
+        /**
          * Starts the timer
          */
         public function start(): void
@@ -66,6 +71,14 @@
             $end_time = (float) hrtime(true) - $this->startTime;
             $this->duration = Duration::fromNanoseconds($end_time);
             $this->timeLogs[] = $end_time;
+
+            if($this->max_time_logs > 0 && count($this->timeLogs) > $this->max_time_logs)
+            {
+                while(count($this->timeLogs) > $this->max_time_logs)
+                {
+                    array_shift($this->timeLogs);
+                }
+            }
 
             return $this->duration;
         }
@@ -106,6 +119,7 @@
          * Indicates if the timer is currently running
          *
          * @return bool
+         * @noinspection PhpUnused
          */
         public function isRunning(): bool
         {
@@ -124,9 +138,36 @@
 
         /**
          * Clears the Timelog history
+         * @noinspection PhpUnused
          */
         public function clearTimeLogs()
         {
             $this->timeLogs = [];
+        }
+
+        /**
+         * Gets the current amount of logs
+         *
+         * @return int
+         * @noinspection PhpUnused
+         */
+        public function getMaxTimeLogs(): int
+        {
+            return $this->max_time_logs;
+        }
+
+        /**
+         * Sets the maximum amount of time logs to store in memory, older times will be removed from memory
+         * Set the value to "0" for unlimited logs
+         *
+         * @param int $max_time_logs
+         * @noinspection PhpUnused
+         */
+        public function setMaxTimeLogs(int $max_time_logs): void
+        {
+            if($max_time_logs < 0)
+                throw new InvalidArgumentException("The parameter 'max_time_logs' cannot have a value less than 0");
+
+            $this->max_time_logs = $max_time_logs;
         }
     }
